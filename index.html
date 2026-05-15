@@ -269,16 +269,27 @@
 
   .about-text p strong { color: var(--gold); font-weight: 600; }
 
+  /* ---- 2x2 grid + centered 5th card ---- */
   .about-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 
+  .stat-card-center {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .stat-card-center .stat-card {
+    width: calc(50% - 0.75rem);
+  }
+
   .stat-card {
     background: var(--dark2);
     border: 1px solid rgba(201,168,76,0.15);
-    padding: 1.8rem 1.5rem;
+    padding: 1.8rem 1.2rem;
     position: relative;
     overflow: hidden;
   }
@@ -809,6 +820,7 @@
     .hero-emblem-wrap svg { width: 220px; height: 220px; }
     .about-grid, .blog-grid, .faith-grid, .tech-grid,
     .fitness-layout, .lp-hero, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .about-stats { grid-template-columns: repeat(2, 1fr); }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; }
   }
@@ -852,68 +864,39 @@
           <path id="heroBottomArc" d="M 70,182 A 101,101 0 0,0 270,182"/>
         </defs>
 
-        <!-- Slow rotating outer ring -->
         <g class="emblem-outer-ring">
           <polygon points="170,8 332,170 170,332 8,170" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
           <polygon points="170,22 318,170 170,318 22,170" fill="none" stroke="#C9A84C" stroke-width="0.6"/>
-          <!-- Cardinal micro diamonds on outer ring -->
           <polygon points="170,10 177,20 170,30 163,20" fill="#C9A84C" opacity="0.7"/>
           <polygon points="330,163 340,170 330,177 320,170" fill="#C9A84C" opacity="0.7"/>
           <polygon points="170,310 177,320 170,330 163,320" fill="#C9A84C" opacity="0.7"/>
           <polygon points="10,163 20,170 10,177 0,170" fill="#C9A84C" opacity="0.7"/>
         </g>
 
-        <!-- Static inner structure -->
-        <!-- Main filled diamond -->
         <polygon points="170,42 298,170 170,298 42,170" fill="#1a1a1a" stroke="#C9A84C" stroke-width="1.2"/>
-
-        <!-- Inner filled -->
         <polygon points="170,68 272,170 170,272 68,170" fill="#111111" stroke="#C9A84C" stroke-width="0.7"/>
-
-        <!-- Dashed decorative ring -->
         <polygon points="170,92 248,170 170,248 92,170" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="5,3"/>
 
-        <!-- MICHAEL PARKER arched top -->
         <text font-family="Georgia, serif" font-size="11" font-weight="700" fill="#C9A84C" letter-spacing="3">
           <textPath href="#heroTopArc" startOffset="50%" text-anchor="middle">MICHAEL  PARKER</textPath>
         </text>
 
-        <!-- THE LEGACY BUILDER arched bottom -->
         <text font-family="Georgia, serif" font-size="9" font-weight="400" fill="#C9A84C" letter-spacing="2.5">
           <textPath href="#heroBottomArc" startOffset="50%" text-anchor="middle">THE  LEGACY  BUILDER</textPath>
         </text>
 
-        <!-- Top accent diamond -->
         <polygon points="170,96 180,110 170,124 160,110" fill="#C9A84C"/>
-
-        <!-- Bottom accent diamond -->
         <polygon points="170,216 180,230 170,244 160,230" fill="#C9A84C"/>
-
-        <!-- Cardinal side dots -->
         <circle cx="74" cy="170" r="4" fill="#C9A84C"/>
         <circle cx="266" cy="170" r="4" fill="#C9A84C"/>
-
-        <!-- Top rule lines -->
         <line x1="112" y1="130" x2="228" y2="130" stroke="#C9A84C" stroke-width="0.8"/>
         <line x1="118" y1="134" x2="222" y2="134" stroke="#C9A84C" stroke-width="0.4"/>
-
-        <!-- Bottom rule lines -->
         <line x1="118" y1="206" x2="222" y2="206" stroke="#C9A84C" stroke-width="0.4"/>
         <line x1="112" y1="210" x2="228" y2="210" stroke="#C9A84C" stroke-width="0.8"/>
-
-        <!-- MY CIRCLE -->
         <text x="170" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="700" fill="#C9A84C" letter-spacing="2.5">MY CIRCLE</text>
-
-        <!-- IS BUILT ON -->
         <text x="170" y="163" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="400" fill="#e0e0e0" letter-spacing="2">IS BUILT ON</text>
-
-        <!-- LOYALTY -->
         <text x="170" y="186" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="2">LOYALTY</text>
-
-        <!-- NOT LINEAGE -->
         <text x="170" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="400" fill="#e0e0e0" letter-spacing="3">NOT LINEAGE</text>
-
-        <!-- MP monogram -->
         <text x="170" y="236" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="700" fill="#C9A84C" letter-spacing="4">M  P</text>
       </svg>
     </div>
@@ -940,18 +923,20 @@
       </div>
       <div class="stat-card">
         <div class="stat-number">PhD</div>
-        <div class="stat-label">Information Technology</div>
+        <div class="stat-label">Doctoral Candidate &mdash; Information Technology</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-value">BSBA</div>
-        <div class="stat-label">MANAGEMENT INFO SYSTEMS</div>
+      <div class="stat-card-center">
+        <div class="stat-card">
+          <div class="stat-number">BSBA</div>
+          <div class="stat-label">Mgmt Info Systems</div>
+        </div>
       </div>
       <div class="stat-card">
         <div class="stat-number">DoD</div>
         <div class="stat-label">Target Career Path</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">∞</div>
+        <div class="stat-number">&#8734;</div>
         <div class="stat-label">Legacy in Progress</div>
       </div>
     </div>
