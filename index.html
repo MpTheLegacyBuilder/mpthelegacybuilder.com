@@ -21,6 +21,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   html { scroll-behavior: smooth; }
 
   body {
@@ -32,7 +33,18 @@
     overflow-x: hidden;
   }
 
-  /* NAV */
+  /* ---- NOISE TEXTURE OVERLAY ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ---- NAV ---- */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -74,70 +86,886 @@
 
   .nav-links a:hover { color: var(--gold); }
 
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-diamond {
+    position: absolute;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    width: 700px;
+    height: 700px;
+    opacity: 0.04;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
     color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--white);
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.4s;
+  }
+
+  .hero-name span { color: var(--gold); }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-top: 0.8rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.6s;
+  }
+
+  .hero-tagline {
+    max-width: 520px;
+    font-size: 1.05rem;
+    color: var(--white-dim);
+    margin-top: 1.8rem;
+    line-height: 1.8;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 0.8s;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 1s;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2.2rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
     cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
   }
 
-  @media (max-width: 768px) {
-    .nav-toggle { display: block; }
-    .nav-links {
-      position: fixed;
-      top: 80px; left: 0; right: 0;
-      background: rgba(13,13,13,0.98);
-      flex-direction: column;
-      padding: 2rem;
-      gap: 1.8rem;
-      transform: translateY(-20px);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s ease;
-    }
-    .nav-links.show {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    padding: 0.85rem 2.2rem;
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
   }
 
-  /* Original styles continue */
-  #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; }
-  .hero-layout { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; }
-  .hero-emblem-wrap svg { width: 340px; height: 340px; filter: drop-shadow(0 0 32px rgba(201,168,76,0.18)); }
-  .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; line-height: 1.0; color: var(--white); }
-  .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-top: 0.8rem; }
-  .hero-tagline { max-width: 520px; font-size: 1.05rem; color: var(--white-dim); margin-top: 1.8rem; line-height: 1.8; }
-  .hero-cta-row { display: flex; gap: 1.2rem; margin-top: 2.5rem; }
+  .btn-outline:hover { background: var(--gold); color: var(--black); transform: translateY(-2px); }
 
-  .btn-primary { padding: 0.85rem 2.2rem; background: var(--gold); color: var(--black); text-decoration: none; border: none; cursor: pointer; font-weight: 700; font-size: 0.82rem; letter-spacing: 3px; text-transform: uppercase; }
-  .btn-outline { padding: 0.85rem 2.2rem; background: transparent; color: var(--gold); border: 1px solid var(--gold); text-decoration: none; cursor: pointer; font-weight: 700; font-size: 0.82rem; letter-spacing: 3px; text-transform: uppercase; }
+  .hero-rule {
+    width: 80px;
+    height: 2px;
+    background: var(--gold);
+    margin-top: 3rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    animation-delay: 1.1s;
+  }
 
-  section { padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
-  .section-full { max-width: 100%; padding: 6rem 4rem; }
-  .section-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
-  .section-rule { width: 50px; height: 2px; background: var(--gold); margin-bottom: 2.5rem; }
+  /* ---- SECTION SHARED ---- */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .section-full {
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-title span { color: var(--gold); }
+
+  .section-rule {
+    width: 50px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ---- ABOUT ---- */
+  #about { border-top: 1px solid rgba(201,168,76,0.1); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .about-text p {
+    color: var(--white-dim);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--gold); font-weight: 600; }
+
+  /* ---- 2x2 grid + centered 5th card ---- */
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card-center {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .stat-card-center .stat-card {
+    width: calc(50% - 0.75rem);
+  }
+
+  .stat-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 1.8rem 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-top: 0.4rem;
+  }
+
+  /* ---- DIVIDER ---- */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ---- BLOG ---- */
+  #blog { border-top: 1px solid rgba(201,168,76,0.1); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .blog-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 2rem;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .blog-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+  .blog-card:hover::after { width: 100%; }
+
+  .blog-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.8rem;
+  }
+
+  .blog-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+
+  .blog-card p {
+    font-size: 0.88rem;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+
+  .blog-date {
+    font-size: 0.72rem;
+    color: var(--gold-dim);
+    margin-top: 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 2px;
+  }
+
+
+  .blog-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .blog-card-link:hover .blog-card {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-4px);
+  }
+
+  .blog-card-link:hover .blog-card::after {
+    width: 100%;
+  }
+
+  /* ---- FAITH ---- */
+  #faith {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    background: var(--dark);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .faith-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .verse-feature {
+    background: var(--dark3);
+    border-left: 4px solid var(--gold);
+    padding: 3rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .verse-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .verse-ref {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .faith-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .faith-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 1.8rem;
+    transition: border-color 0.2s;
+  }
+
+  .faith-card:hover { border-color: rgba(201,168,76,0.35); }
+
+  .faith-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .faith-card p { font-size: 0.88rem; color: var(--white-dim); line-height: 1.7; }
+
+  /* ---- FITNESS ---- */
+  #fitness { border-top: 1px solid rgba(201,168,76,0.1); }
+
+  .fitness-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .fitness-goals { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .goal-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 1.4rem 1.8rem;
+    transition: border-color 0.2s;
+  }
+
+  .goal-item:hover { border-color: rgba(201,168,76,0.3); }
+
+  .goal-icon {
+    font-size: 1.6rem;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .goal-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .goal-text p { font-size: 0.85rem; color: var(--white-dim); }
+
+  .progress-section h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .progress-item { margin-bottom: 1.8rem; }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--white-dim);
+    margin-bottom: 0.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .progress-label span:last-child { color: var(--gold); }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--dark3);
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: -3px;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  /* ---- TECH ---- */
+  #tech {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    background: var(--dark);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .tech-inner { max-width: 1200px; margin: 0 auto; }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .tech-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .tech-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+
+  .tech-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+
+  .tech-card h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .tech-card p { font-size: 0.82rem; color: var(--white-dim); line-height: 1.6; }
+
+  /* ---- LEGACYPATH ---- */
+  #legacypath { border-top: 1px solid rgba(201,168,76,0.1); }
+
+  .lp-hero {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 4rem;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lp-hero::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--orange), var(--gold));
+  }
+
+  .lp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .lp-title span { color: var(--gold); }
+
+  .lp-desc { font-size: 0.95rem; color: var(--white-dim); line-height: 1.8; margin-bottom: 1.8rem; }
+
+  .lp-services { display: flex; flex-direction: column; gap: 1rem; }
+
+  .lp-service {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: var(--dark3);
+    border-left: 2px solid var(--gold);
+  }
+
+  .lp-service-icon { font-size: 1.2rem; min-width: 28px; }
+
+  .lp-service h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+
+  .lp-service p { font-size: 0.82rem; color: var(--white-dim); }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    background: var(--dark);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2.5rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-group label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white);
+    padding: 0.9rem 1.2rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+
+  .form-group textarea { min-height: 130px; }
+
+  .contact-info { margin-top: 2.5rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .contact-item-icon { font-size: 1.2rem; color: var(--gold); min-width: 28px; }
+
+  .contact-item-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-item-text p { font-size: 0.9rem; color: var(--white); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  .footer-sig {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+  }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* Rest of styles (abbreviated for space but fully functional) */
-  #daily-combo, #faith, #tech, #contact { background: var(--dark); }
-  .combo-grid, .blog-grid, .faith-grid, .tech-grid { display: grid; gap: 1.5rem; margin-top: 3rem; }
+  /* ---- HERO EMBLEM ---- */
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-emblem-wrap {
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-emblem-wrap svg {
+    width: 340px;
+    height: 340px;
+    filter: drop-shadow(0 0 32px rgba(201,168,76,0.18));
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .emblem-outer-ring {
+    transform-origin: center;
+    animation: rotateSlow 30s linear infinite;
+  }
+
+  /* ---- DAILY COMBO ---- */
+  #daily-combo {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    background: var(--dark);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .combo-inner { max-width: 1200px; margin: 0 auto; }
+
+  .combo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+  }
+
+  .combo-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.5rem 1.2rem;
+    white-space: nowrap;
+    margin-top: 0.5rem;
+  }
+
+  .combo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .combo-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .combo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+  }
+
+  .combo-card.motivation::before { background: var(--orange); }
+  .combo-card.wisdom::before { background: var(--gold); }
+  .combo-card.spiritual::before { background: #7eb8c9; }
+
+  .combo-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .combo-card.motivation .combo-card-label { color: var(--orange); }
+  .combo-card.wisdom .combo-card-label { color: var(--gold); }
+  .combo-card.spiritual .combo-card-label { color: #7eb8c9; }
+
+  .combo-card p:last-child {
+    font-size: 0.92rem;
+    color: var(--white-dim);
+    line-height: 1.75;
+  }
+
+  .combo-powerline {
+    background: var(--dark2);
+    border-left: 4px solid var(--gold);
+    padding: 2rem 2.5rem;
+    position: relative;
+  }
+
+  .combo-powerline::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--orange));
+  }
+
+  .combo-powerline-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .combo-powerline p {
+    font-size: 0.95rem;
+    color: var(--white-dim);
+    line-height: 1.75;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .combo-powerline span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
   @media (max-width: 768px) {
-    section, .section-full { padding: 4rem 1.5rem; }
-    .hero-layout { grid-template-columns: 1fr; }
-    .hero-emblem-wrap svg { width: 220px; height: 220px; }
-    .combo-grid, .blog-grid, .faith-grid, .tech-grid { grid-template-columns: 1fr; }
+    .combo-grid { grid-template-columns: 1fr; }
+    .combo-header { flex-direction: column; gap: 1rem; }
+    #daily-combo { padding: 4rem 1.5rem; }
+  }
+
+
+  @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .section-full, #faith, #tech, #contact, #fitness { padding: 4rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-emblem-wrap svg { width: 220px; height: 220px; }
+    .about-grid, .blog-grid, .faith-grid, .tech-grid,
+    .fitness-layout, .lp-hero, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .about-stats { grid-template-columns: repeat(2, 1fr); }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
   }
 </style>
-
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q36BF0CL53"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -151,8 +979,7 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#hero">MP | THE LEGACY BUILDER</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
-  <ul class="nav-links" id="nav-links">
+  <ul class="nav-links">
     <li><a href="#daily-combo">Daily Combo</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#blog">Blog</a></li>
@@ -168,7 +995,7 @@
 <section id="hero">
   <div class="hero-layout">
     <div class="hero-content">
-      <p class="hero-eyebrow">Building What Lasts — One Decision at a Time</p>
+      <p class="hero-eyebrow">Building What Lasts &mdash; One Decision at a Time</p>
       <h1 class="hero-name">Michael<br><span>Parker</span></h1>
       <p class="hero-title">The Legacy Builder &nbsp;|&nbsp; Mr. Reliable</p>
       <p class="hero-tagline">Network Engineer. Doctoral Researcher. Faith-driven leader. This is where discipline meets purpose, and where every chapter of the journey gets documented.</p>
@@ -178,25 +1005,57 @@
       </div>
       <div class="hero-rule"></div>
     </div>
+
     <div class="hero-emblem-wrap">
       <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
-        <!-- Full SVG from your original file -->
         <defs>
           <path id="heroTopArc" d="M 58,170 A 113,113 0 0,1 282,170"/>
           <path id="heroBottomArc" d="M 70,182 A 101,101 0 0,0 270,182"/>
         </defs>
+
         <g class="emblem-outer-ring">
           <polygon points="170,8 332,170 170,332 8,170" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
-          <!-- ... (your full SVG code) ... -->
+          <polygon points="170,22 318,170 170,318 22,170" fill="none" stroke="#C9A84C" stroke-width="0.6"/>
+          <polygon points="170,10 177,20 170,30 163,20" fill="#C9A84C" opacity="0.7"/>
+          <polygon points="330,163 340,170 330,177 320,170" fill="#C9A84C" opacity="0.7"/>
+          <polygon points="170,310 177,320 170,330 163,320" fill="#C9A84C" opacity="0.7"/>
+          <polygon points="10,163 20,170 10,177 0,170" fill="#C9A84C" opacity="0.7"/>
         </g>
+
+        <polygon points="170,42 298,170 170,298 42,170" fill="#1a1a1a" stroke="#C9A84C" stroke-width="1.2"/>
+        <polygon points="170,68 272,170 170,272 68,170" fill="#111111" stroke="#C9A84C" stroke-width="0.7"/>
+        <polygon points="170,92 248,170 170,248 92,170" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="5,3"/>
+
+        <text font-family="Georgia, serif" font-size="11" font-weight="700" fill="#C9A84C" letter-spacing="3">
+          <textPath href="#heroTopArc" startOffset="50%" text-anchor="middle">MICHAEL  PARKER</textPath>
+        </text>
+
+        <text font-family="Georgia, serif" font-size="9" font-weight="400" fill="#C9A84C" letter-spacing="2.5">
+          <textPath href="#heroBottomArc" startOffset="50%" text-anchor="middle">THE  LEGACY  BUILDER</textPath>
+        </text>
+
+        <polygon points="170,96 180,110 170,124 160,110" fill="#C9A84C"/>
+        <polygon points="170,216 180,230 170,244 160,230" fill="#C9A84C"/>
+        <circle cx="74" cy="170" r="4" fill="#C9A84C"/>
+        <circle cx="266" cy="170" r="4" fill="#C9A84C"/>
+        <line x1="112" y1="130" x2="228" y2="130" stroke="#C9A84C" stroke-width="0.8"/>
+        <line x1="118" y1="134" x2="222" y2="134" stroke="#C9A84C" stroke-width="0.4"/>
+        <line x1="118" y1="206" x2="222" y2="206" stroke="#C9A84C" stroke-width="0.4"/>
+        <line x1="112" y1="210" x2="228" y2="210" stroke="#C9A84C" stroke-width="0.8"/>
+        <text x="170" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="700" fill="#C9A84C" letter-spacing="2.5">MY CIRCLE</text>
+        <text x="170" y="163" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="400" fill="#e0e0e0" letter-spacing="2">IS BUILT ON</text>
+        <text x="170" y="186" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="2">LOYALTY</text>
+        <text x="170" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="400" fill="#e0e0e0" letter-spacing="3">NOT LINEAGE</text>
+        <text x="170" y="236" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="700" fill="#C9A84C" letter-spacing="4">M  P</text>
       </svg>
     </div>
   </div>
 </section>
 
-<!-- DAILY COMBO -->
+<!-- DAILY POWER COMBO -->
 <div id="daily-combo">
   <div class="combo-inner">
+
     <div class="combo-header">
       <div>
         <p class="section-eyebrow reveal">Posted Daily</p>
@@ -205,7 +1064,30 @@
       </div>
       <div class="combo-date reveal">Monday, May 18, 2026</div>
     </div>
-    <!-- Combo cards here -->
+
+    <div class="combo-grid">
+      <div class="combo-card motivation reveal">
+        <p class="combo-card-label">Motivation</p>
+        <p>Most people wait for the perfect moment. Legacy Builders create it. Today isn't just another Friday — it's another 24 hours to outwork, outthink, and outlast the version of you from yesterday.</p>
+      </div>
+      <div class="combo-card wisdom reveal">
+        <p class="combo-card-label">Wisdom</p>
+        <p>Discipline is not what you do when people are watching — it's what you do when no one is. The reps you put in today in silence will speak volumes tomorrow in results.</p>
+      </div>
+      <div class="combo-card spiritual reveal">
+        <p class="combo-card-label">Spiritual Insight</p>
+        <p>&#x271D; LEGACY / SPIRITUAL — "Before I formed you in the womb I knew you." — Jeremiah 1:5. Your purpose wasn't an accident. Your gifts, your grind, your story — all assigned. Walk in it with confidence. You were built for this.</p>
+      </div>
+    </div>
+
+    <div class="combo-powerline reveal">
+      <div class="combo-powerline-label">Power Line</div>
+      <p>
+        Every dollar you earn is a soldier. The question is — are you deploying your soldiers strategically or letting them bleed out on impulse spending? Build your war chest. Eliminate the debt. Stack the legacy.
+        <span>MP | The Legacy Builder AKA Mr. Reliable</span>
+      </p>
+    </div>
+
   </div>
 </div>
 
@@ -214,51 +1096,381 @@
   <p class="section-eyebrow reveal">Who I Am</p>
   <h2 class="section-title reveal">Built on <span>Discipline</span>,<br>Driven by Purpose</h2>
   <div class="section-rule reveal"></div>
-  <!-- Your about content -->
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm <strong>Michael Parker</strong> — a seasoned IT and Network/Voice Engineer with over <strong>25 years of experience</strong> in enterprise networking, Cisco collaboration, and voice infrastructure. I currently work from home and am pursuing a <strong>PhD in Information Technology</strong> at National University.</p>
+      <p>My research spans cybersecurity, secure communications, AI integration for enterprise and defense resilience, and digital transformation. I'm not just building a career — I'm building a <strong>legacy</strong>.</p>
+      <p>Married to <strong>Tara Parker</strong>, grounded in faith, and relentless in pursuit of growth — mentally, physically, spiritually, and financially. That's the standard I hold myself to every single day.</p>
+      <a href="#contact" class="btn-outline" style="display:inline-block; margin-top:1.5rem;">Get In Touch</a>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-number">25+</div>
+        <div class="stat-label">Years in IT &amp; Networking</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">PhD</div>
+        <div class="stat-label">Doctoral Candidate &mdash; Information Technology</div>
+      </div>
+      <div class="stat-card-center">
+        <div class="stat-card">
+          <div class="stat-number">MBA</div>
+          <div class="stat-label">Executive MBA &mdash; Business Administration</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">BSBA</div>
+          <div class="stat-label">Mgmt Info Systems</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">DoD</div>
+        <div class="stat-label">Target Career Path</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">&#8734;</div>
+        <div class="stat-label">Legacy in Progress</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- BLOG, FAITH, FITNESS, TECH, LEGACYPATH, CONTACT, FOOTER sections go here with their IDs -->
+<!-- BLOG -->
+<section id="blog">
+  <p class="section-eyebrow reveal">Thoughts &amp; Insights</p>
+  <h2 class="section-title reveal">The <span>Blog</span></h2>
+  <div class="section-rule reveal"></div>
 
+  <div class="blog-grid">
+    <a href="/blog/loyalty-not-lineage" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Legacy &amp; Leadership</p>
+        <h3>My Circle Is Built on Loyalty, Not Lineage</h3>
+        <p>Family isn't always blood. It's the people who show up, stay in your corner, and choose you every single day — without obligation.</p>
+        <p class="blog-date">May 2026</p>
+      </div>
+    </a>
+    <a href="/blog/zero-trust-architecture" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Tech &amp; Cybersecurity</p>
+        <h3>Zero Trust Architecture: Why the Old Perimeter Is Dead</h3>
+        <p>The castle-and-moat security model no longer holds. Here's why Zero Trust isn't just a buzzword — it's the future of defense-grade networking.</p>
+        <p class="blog-date">May 2026</p>
+      </div>
+    </a>
+    <a href="/blog/malachi-standards-accountability" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Faith &amp; Growth</p>
+        <h3>What Malachi Taught Me About Standards and Accountability</h3>
+        <p>The book of Malachi is a mirror. It reflects exactly where we cut corners, lower the bar, and offer God — and ourselves — our leftovers instead of our best.</p>
+        <p class="blog-date">April 2026</p>
+      </div>
+    </a>
+    <a href="/blog/phase-1-foundation-52-weeks" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Fitness</p>
+        <h3>Phase 1: The Foundation — 52 Weeks to a New Body</h3>
+        <p>At 6'3" and 350 lbs, I made a decision. Not a New Year's resolution. A covenant. Here's the plan, the why, and the weekly accountability that keeps me honest.</p>
+        <p class="blog-date">April 2026</p>
+      </div>
+    </a>
+    <a href="/blog/estate-plan-not-just-wealthy" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Business</p>
+        <h3>Why Every Family Needs an Estate Plan — Not Just the Wealthy</h3>
+        <p>LegacyPath was born from a simple truth: most families leave nothing behind because no one sat them down and explained the basics. That changes now.</p>
+        <p class="blog-date">March 2026</p>
+      </div>
+    </a>
+    <a href="/blog/agile-zero-trust-government-it" class="blog-card-link">
+      <div class="blog-card reveal">
+        <p class="blog-tag">Academic</p>
+        <h3>Agile, Zero Trust, and the Future of U.S. Government IT</h3>
+        <p>My doctoral research examines how Agile methodologies and Zero Trust Architecture are reshaping legacy IT modernization across U.S. federal agencies.</p>
+        <p class="blog-date">March 2026</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FAITH -->
+<div id="faith" class="section-full">
+  <div class="faith-inner">
+    <p class="section-eyebrow reveal">Faith &amp; Inspiration</p>
+    <h2 class="section-title reveal">Anchored in <span>Purpose</span></h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="verse-feature reveal">
+      <p class="verse-text">"For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."</p>
+      <p class="verse-ref">Jeremiah 29:11 &mdash; NIV</p>
+    </div>
+
+    <div class="faith-grid">
+      <div class="faith-card reveal">
+        <h4>Daily Devotion</h4>
+        <p>Faith isn't a Sunday activity — it's a daily discipline. Every morning is a new opportunity to align with purpose, give your best, and serve something greater than yourself.</p>
+      </div>
+      <div class="faith-card reveal">
+        <h4>Biblical Study</h4>
+        <p>Deep study of scripture — from the prophecies of Malachi to the patriarchs of Genesis — sharpens discernment, builds character, and anchors decisions in something eternal.</p>
+      </div>
+      <div class="faith-card reveal">
+        <h4>Legacy of Faith</h4>
+        <p>The greatest inheritance you leave your children isn't financial — it's spiritual. A life lived with integrity, purpose, and faith is a foundation that outlasts every generation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FITNESS -->
+<section id="fitness">
+  <p class="section-eyebrow reveal">The Journey</p>
+  <h2 class="section-title reveal">Fitness &amp; <span>Discipline</span></h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="fitness-layout">
+    <div class="fitness-goals reveal">
+      <div class="goal-item">
+        <div class="goal-icon">⚖️</div>
+        <div class="goal-text">
+          <h4>Weight Goal</h4>
+          <p>From 350 lbs down to 280 lbs — a 70 lb transformation over 52 weeks through consistency, not shortcuts.</p>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">💪</div>
+        <div class="goal-text">
+          <h4>Strength Target</h4>
+          <p>20 pull-ups and 100 consecutive push-ups. Built with a weight bench, bags, and sheer will.</p>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">🥊</div>
+        <div class="goal-text">
+          <h4>Boxing Endurance</h4>
+          <p>Elite bag work endurance using the home boxing setup — combining cardio, coordination, and mental toughness.</p>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">🏃</div>
+        <div class="goal-text">
+          <h4>Cardio Foundation</h4>
+          <p>Treadmill and recumbent bike sessions structured around joint protection and progressive overload.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-section reveal">
+      <h3>52-Week Progress Tracker</h3>
+      <div class="progress-item">
+        <div class="progress-label"><span>Weight Loss</span><span>20%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Pull-Up Goal</span><span>15%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Push-Up Goal</span><span>25%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Cardio Endurance</span><span>30%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Boxing Endurance</span><span>20%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH & NETWORKING -->
+<div id="tech" class="section-full">
+  <div class="tech-inner">
+    <p class="section-eyebrow reveal">Expertise</p>
+    <h2 class="section-title reveal">Tech &amp; <span>Networking</span></h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal">
+        <div class="tech-icon">🌐</div>
+        <h4>Enterprise Networking</h4>
+        <p>25+ years designing, configuring, and optimizing enterprise-grade network infrastructure.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">📞</div>
+        <h4>Cisco Voice / CUCM</h4>
+        <p>Deep expertise in Cisco Unified Communications Manager, VoIP, and collaboration platforms.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">🔒</div>
+        <h4>Cybersecurity</h4>
+        <p>Zero Trust Architecture, NOC/SOC integration, SIEM/SOAR, and AI-driven threat intelligence.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">🤖</div>
+        <h4>AI Integration</h4>
+        <p>Deploying AI tools for enterprise and defense resilience, including custom agent platforms.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">🏠</div>
+        <h4>Home Lab</h4>
+        <p>Active Cisco lab: 2851 router, 2960S switch, CUCM voice lab, VLANs, AnyConnect VPN.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">📡</div>
+        <h4>DoD Networking</h4>
+        <p>Pursuing DoD Network/Voice Engineer role — applying enterprise expertise to defense-grade missions.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">☁️</div>
+        <h4>Cloud &amp; VPS</h4>
+        <p>VPS fundamentals, remote access architecture, VPN tunnels, and cloud monitoring strategies.</p>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-icon">🎓</div>
+        <h4>PhD Research</h4>
+        <p>Doctoral research on Agile modernization and Zero Trust in U.S. government IT systems.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGACYPATH -->
+<section id="legacypath">
+  <p class="section-eyebrow reveal">Business</p>
+  <h2 class="section-title reveal">LegacyPath <span>Estate Planning</span></h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="lp-hero reveal">
+    <div>
+      <p class="lp-title">Protecting Families.<br>Preserving <span>Legacies.</span></p>
+      <p class="lp-desc">LegacyPath Estate Planning, LLC is a non-attorney estate planning service in Texas, built on the belief that every family — regardless of wealth — deserves to have a plan. Most families leave nothing behind not because they didn't care, but because no one sat them down and walked them through the basics. That's what we're here to change.</p>
+      <a href="#contact" class="btn-primary">Start Your Legacy Plan</a>
+    </div>
+    <div class="lp-services">
+      <div class="lp-service">
+        <div class="lp-service-icon">📋</div>
+        <div>
+          <h4>Will Preparation</h4>
+          <p>Clear, straightforward will documents that ensure your wishes are honored.</p>
+        </div>
+      </div>
+      <div class="lp-service">
+        <div class="lp-service-icon">🛡️</div>
+        <div>
+          <h4>Trust Planning</h4>
+          <p>Revocable and irrevocable trust structures designed to protect your assets.</p>
+        </div>
+      </div>
+      <div class="lp-service">
+        <div class="lp-service-icon">📝</div>
+        <div>
+          <h4>Powers of Attorney</h4>
+          <p>Financial and healthcare directives so your family is never left guessing.</p>
+        </div>
+      </div>
+      <div class="lp-service">
+        <div class="lp-service-icon">🏡</div>
+        <div>
+          <h4>Legacy Consultation</h4>
+          <p>One-on-one planning sessions that map out your full legacy strategy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact" class="section-full">
+  <div class="contact-inner">
+    <div>
+      <p class="section-eyebrow reveal">Get In Touch</p>
+      <h2 class="section-title reveal">Let's <span>Connect</span></h2>
+      <div class="section-rule reveal"></div>
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <h4>Location</h4>
+            <p>Houston, Texas</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💼</div>
+          <div class="contact-item-text">
+            <h4>Professional Focus</h4>
+            <p>Network / Voice Engineering &mdash; DoD</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🎓</div>
+          <div class="contact-item-text">
+            <h4>Academic</h4>
+            <p>PhD in Information Technology &mdash; National University</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🏛️</div>
+          <div class="contact-item-text">
+            <h4>Business</h4>
+            <p>LegacyPath Estate Planning, LLC &mdash; Texas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <form class="contact-form reveal" action="https://formspree.io/f/xlgzyqde" method="POST">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" placeholder="Full name" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" name="subject" placeholder="What's this about?" />
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" placeholder="Tell me what's on your mind..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="align-self:flex-start;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-brand">MP | THE LEGACY BUILDER</div>
-  <div class="footer-sig">AKA Mr. Reliable — Houston, TX</div>
+  <div class="footer-sig">AKA Mr. Reliable &mdash; Houston, TX</div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#blog">Blog</a>
+    <a href="#legacypath">LegacyPath</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
 
 <script>
-  // === MOBILE MENU + SMOOTH SCROLL ===
-  const toggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-
-  toggle.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-  });
-
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('show'));
-  });
-
-  // Smooth scrolling with offset
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        const navHeight = 85;
-        const offset = target.getBoundingClientRect().top + window.scrollY - navHeight;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-      }
-    });
-  });
-
-  // Reveal animations
+  const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
         setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) { e.preventDefault(); }
 </script>
 </body>
 </html>
