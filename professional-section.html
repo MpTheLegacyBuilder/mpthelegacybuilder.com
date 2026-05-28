@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Professional — Michael Parker | The Legacy Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #161616;
+    --bg4: #1C1C1C;
+    --gold: #C9A84C;
+    --gold-dim: #8A6E2F;
+    --white: #F0EDE6;
+    --gray: #888880;
+    --gray-dim: #555550;
+    --border: rgba(201,168,76,0.15);
+    --border-dim: rgba(255,255,255,0.06);
+    --blue: #378ADD;
+    --green: #1D9E75;
+    --red: #E24B4A;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.96);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    backdrop-filter: blur(8px);
+  }
+  .nav-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 3px; color: var(--gold);
+    text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gray);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+  /* ── HERO BAND ── */
+  .prof-hero {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px 60px;
+    position: relative; overflow: hidden;
+  }
+  .prof-hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    pointer-events: none;
+  }
+  .prof-hero::after {
+    content: '';
+    position: absolute; top: 20px; right: 20px;
+    width: 180px; height: 180px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow span {
+    display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+  .hero-eyebrow p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  }
+  .prof-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .prof-hero h1 em {
+    font-style: italic; color: var(--gold);
+  }
+  .brand-statement {
+    font-size: 15px; color: var(--gray);
+    max-width: 620px; margin-bottom: 32px;
+    line-height: 1.8;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 2px;
+    border: 1px solid;
+  }
+  .tag-gold { color: var(--gold); border-color: var(--gold-dim); background: rgba(201,168,76,0.06); }
+  .tag-blue { color: var(--blue); border-color: rgba(55,138,221,0.3); background: rgba(55,138,221,0.06); }
+  .tag-green { color: var(--green); border-color: rgba(29,158,117,0.3); background: rgba(29,158,117,0.06); }
+
+  /* ── LAYOUT ── */
+  .section { padding: 60px 40px; }
+  .section-alt { background: var(--bg2); }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--white); margin-bottom: 8px;
+  }
+
+  /* ── SUMMARY ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-top: 8px;
+  }
+  .summary-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    border-radius: 2px;
+  }
+  .summary-card p {
+    font-size: 14px; color: var(--gray); line-height: 1.8;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .job {
+    padding-left: 28px; margin-bottom: 44px;
+    position: relative;
+  }
+  .job::before {
+    content: ''; position: absolute;
+    left: -4px; top: 8px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--bg);
+  }
+  .job-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; flex-wrap: wrap;
+    gap: 8px; margin-bottom: 4px;
+  }
+  .job-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600; color: var(--white);
+  }
+  .job-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold); white-space: nowrap;
+  }
+  .job-company {
+    font-size: 13px; font-weight: 500;
+    color: var(--gray); margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  .job ul { list-style: none; padding: 0; }
+  .job ul li {
+    font-size: 13px; color: var(--gray);
+    padding: 5px 0 5px 16px;
+    position: relative; line-height: 1.7;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .job ul li:last-child { border-bottom: none; }
+  .job ul li::before {
+    content: '—'; position: absolute; left: 0;
+    color: var(--gold-dim); font-size: 12px;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-outer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .skill-group {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    padding: 20px 22px;
+    border-radius: 2px;
+  }
+  .skill-group-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    font-size: 13px; color: var(--gray);
+    padding: 4px 0;
+  }
+
+  /* ── CERTS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .cert-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-top: 2px solid var(--gold);
+    padding: 20px;
+    border-radius: 2px;
+    text-align: center;
+  }
+  .cert-card .cert-icon {
+    font-size: 24px; margin-bottom: 10px; display: block;
+  }
+  .cert-card p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 1px; color: var(--white);
+    text-transform: uppercase;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .edu-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--gold-dim);
+    padding: 22px 24px;
+    border-radius: 2px;
+  }
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .edu-school {
+    font-size: 13px; color: var(--gold);
+    font-weight: 500; margin-bottom: 4px;
+  }
+  .edu-note {
+    font-size: 12px; color: var(--gray);
+  }
+
+  /* ── ADDITIONAL ── */
+  .additional-list { list-style: none; }
+  .additional-list li {
+    font-size: 13px; color: var(--gray);
+    padding: 10px 0; padding-left: 20px;
+    border-bottom: 1px solid var(--border-dim);
+    position: relative;
+  }
+  .additional-list li::before {
+    content: '▸'; position: absolute; left: 0;
+    color: var(--gold-dim);
+  }
+
+  /* ── CTA ── */
+  .cta-band {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .cta-band h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; color: var(--white);
+    margin-bottom: 12px;
+  }
+  .cta-band p {
+    font-size: 14px; color: var(--gray);
+    margin-bottom: 28px;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--bg); background: var(--gold);
+    padding: 14px 36px; text-decoration: none;
+    border-radius: 2px; transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border-dim);
+    padding: 24px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  footer .brand { color: var(--gold); }
+  footer .tagline { color: var(--gray-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .prof-hero, .section, .cta-band, footer { padding-left: 20px; padding-right: 20px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .job-header { flex-direction: column; }
+  }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="https://www.mpthelegacybuilder.com">The Legacy Builder</a>
+  <ul class="nav-links">
+    <li><a href="https://www.mpthelegacybuilder.com">Home</a></li>
+    <li><a href="#" class="active">Professional</a></li>
+    <li><a href="https://www.mpthelegacybuilder.com/#combo">Power Combo</a></li>
+    <li><a href="mailto:michael@mpthelegacybuilder.com">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="prof-hero fade-in">
+  <div class="hero-eyebrow">
+    <span></span>
+    <p>Professional Profile</p>
+  </div>
+  <h1>Michael Parker<br><em>Network & IT Leader</em></h1>
+  <p class="brand-statement">
+    25+ years engineering mission-critical voice and network infrastructure — from enterprise data centers to university campuses — with the leadership depth to manage teams, drive strategy, and scale operations from the ground up.
+  </p>
+  <div class="hero-tags">
+    <span class="tag tag-gold">IT Manager · Network Manager</span>
+    <span class="tag tag-blue">Cisco CUCM · CCNP Collaboration</span>
+    <span class="tag tag-green">Cypress, TX · Open to DoD Roles</span>
+    <span class="tag tag-gold">PhD-TIM · National University (In Progress)</span>
+  </div>
+</section>
+
+<!-- PROFESSIONAL SUMMARY -->
+<section class="section fade-in">
+  <div class="section-label">Summary</div>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <p>Seasoned IT and Network/Voice Engineer with 25+ years of enterprise experience spanning Cisco Unified Communications, telecom infrastructure, NOC operations, vendor management, and team leadership across Fortune 500, energy, education, and MSP environments.</p>
+    </div>
+    <div class="summary-card">
+      <p>Proven record managing large-scale CUCM/UCCX environments, driving SLA performance, reducing telecom costs, and building operational frameworks that scale. Now targeting IT Manager, Network Manager, and Director-track roles where strategy meets execution.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section section-alt fade-in">
+  <div class="section-label">Experience</div>
+  <div class="timeline">
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Sr. UC Engineer Lead</span>
+        <span class="job-date">Jan 2025 – Nov 2025</span>
+      </div>
+      <div class="job-company">Sideview, LLC — Oakland, CA</div>
+      <ul>
+        <li>Team lead for full Cisco Collaboration stack: CUCM 12.5, CER, UCCX, CUC, Intrado EGW, and Cisco UCS across enterprise environments.</li>
+        <li>Managed telecom vendor relationships, carrier escalations, billing coordination, and SLA compliance for voice and wireless services.</li>
+        <li>Led vulnerability mitigation across collaboration platforms; managed Skype team, CUBES, voice gateways, routers, and switches.</li>
+        <li>Maintained E911 regulatory compliance and Cisco Jabber environments across all supported versions up to CUCM 12.5.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Sr. Engineer</span>
+        <span class="job-date">Aug 2021 – Dec 2024</span>
+      </div>
+      <div class="job-company">SABIC — Houston, TX</div>
+      <ul>
+        <li>Collaboration team lead responsible for CUCM, CER, UCCX, CUC, Intrado EGW, and Cisco UCS at enterprise scale.</li>
+        <li>Drove telecom expense management: billing validation, vendor coordination, contract management, and inventory control.</li>
+        <li>Managed tickets, mitigated platform vulnerabilities, and maintained operational efficiency across voice gateways and enterprise networking infrastructure.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Network Manager</span>
+        <span class="job-date">Feb 2020 – Jun 2021</span>
+      </div>
+      <div class="job-company">Prairie View A&M University — Prairie View, TX</div>
+      <ul>
+        <li>Managed and maintained a highly scalable, resilient VoIP network supporting the university's full Cisco Unified Communications platform.</li>
+        <li>Developed testing criteria, best practices, and standards for the enterprise network — improving efficiency of advanced communication systems.</li>
+        <li>Coordinated with telecom vendors and service providers to maintain reliable voice and wireless services across campus.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Support Engineer</span>
+        <span class="job-date">Jan 2019 – Feb 2020</span>
+      </div>
+      <div class="job-company">Enterprise Products — Houston, TX</div>
+      <ul>
+        <li>Configured, installed, and upgraded Palo Alto Firewalls, Cisco Routers, and switches; maintained ticket activity and run logs.</li>
+        <li>Provided technical escalation support for infrastructure monitoring, troubleshooting, and corrective actions across engineering teams.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Network Engineer</span>
+        <span class="job-date">Oct 2016 – Dec 2019</span>
+      </div>
+      <div class="job-company">Arena Energy — The Woodlands, TX</div>
+      <ul>
+        <li>Designed, configured, and implemented telecommunication systems; resolved escalated VoIP events across the organization.</li>
+        <li>Provided SME support for network infrastructure and security redesigns including CUBES, CME, and CUE platforms.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Network Professional</span>
+        <span class="job-date">Jun 2021 – Aug 2021</span>
+      </div>
+      <div class="job-company">Meriplex Communications — Houston, TX</div>
+      <ul>
+        <li>Supported NOC operations ensuring SLAs were consistently met across all levels of business and IT.</li>
+        <li>Performed Cisco voice deployment software upgrades; coordinated with telecom vendors to improve customer experience.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ADDITIONAL EXPERIENCE -->
+<section class="section fade-in">
+  <div class="section-label">Additional Experience</div>
+  <ul class="additional-list">
+    <li>VoIP Customer Support Engineer — Cisco Systems, Inc., Houston, TX</li>
+    <li>Staff Consultant / SME — Accenture, Dallas, TX</li>
+    <li>Information Systems Engineer — TriQuint Semiconductor, Richardson, TX</li>
+    <li>Machinist Mate 2nd Class / Steam Generation Plant Supervisor / Military Police Officer — US Navy</li>
+  </ul>
+</section>
+
+<!-- SKILLS -->
+<section class="section section-alt fade-in">
+  <div class="section-label">Technical Skills</div>
+  <div class="skills-outer">
+    <div class="skill-group">
+      <div class="skill-group-title">Cisco Collaboration</div>
+      <ul class="skill-list">
+        <li>CUCM / UCCX (v4.x – v15.x)</li>
+        <li>Cisco Unity Connection (CUC)</li>
+        <li>Cisco Emergency Responder (CER)</li>
+        <li>Cisco Jabber Support</li>
+        <li>Cisco UCS Administration</li>
+        <li>CUBES & Voice Gateways</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Networking & Security</div>
+      <ul class="skill-list">
+        <li>Cisco Routers & Switches</li>
+        <li>LAN / WAN / Wi-Fi</li>
+        <li>Palo Alto Firewall Integration</li>
+        <li>Network Security & Compliance</li>
+        <li>VoIP Engineering & Administration</li>
+        <li>E911 Compliance & Regulations</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Operations & Management</div>
+      <ul class="skill-list">
+        <li>NOC Operations (15+ Years)</li>
+        <li>SLA Management</li>
+        <li>Team Building & Leadership</li>
+        <li>Root Cause Analysis</li>
+        <li>Technical Escalation Management</li>
+        <li>MSP & Help Desk Operations</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Telecom & Vendor</div>
+      <ul class="skill-list">
+        <li>Telecom Expense Management (TEM)</li>
+        <li>Billing & Invoice Validation</li>
+        <li>Vendor & Carrier Coordination</li>
+        <li>Telecom Contract Management</li>
+        <li>Wireless & Voice Services</li>
+        <li>Telecom Inventory Tracking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section fade-in">
+  <div class="section-label">Certifications</div>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <span class="cert-icon">🏆</span>
+      <p>CCNP Collaboration</p>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🏆</span>
+      <p>CCNA Collaboration</p>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🏆</span>
+      <p>CCNA Route/Switch</p>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🏆</span>
+      <p>ITILv3 Foundation</p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section section-alt fade-in">
+  <div class="section-label">Education</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">Doctor of Philosophy — Information Technology</div>
+      <div class="edu-school">National University</div>
+      <div class="edu-note">In Progress — Research focus: AI integration, cybersecurity, enterprise resilience</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Master of Business Administration (MBA)</div>
+      <div class="edu-school">Texas Southern University — Houston, TX</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">B.S. in Management of Information Systems</div>
+      <div class="edu-school">University of Texas at Dallas — Richardson, TX</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Cybersecurity Professional Certificate</div>
+      <div class="edu-school">University of Texas at Austin — Austin, TX</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band fade-in">
+  <h3>Ready to connect?</h3>
+  <p>Actively pursuing IT Manager, Network Manager, and Director of IT opportunities — including DoD and federal roles.</p>
+  <a class="cta-btn" href="mailto:michael@mpthelegacybuilder.com">Get in Touch</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="brand">The Legacy Builder</p>
+  <p class="tagline">Discipline &nbsp;·&nbsp; Faith &nbsp;·&nbsp; Ownership &nbsp;·&nbsp; Legacy</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
