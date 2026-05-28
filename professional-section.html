@@ -607,5 +607,160 @@
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 
+<!-- MUSIC PLAYER BAR: START -->
+<style>
+#lp-player {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: #0E0E0E;
+  border-top: 1px solid rgba(201,168,76,0.25);
+  height: 56px;
+  display: flex; align-items: center;
+  padding: 0 24px; gap: 16px;
+}
+#lp-player .lp-logo {
+  font-family: Arial, sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #C9A84C; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+#lp-player .lp-logo::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #C9A84C;
+  animation: lp-pulse 2s infinite;
+}
+#lp-player .lp-logo.paused::before {
+  animation: none; background: #555;
+}
+@keyframes lp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+#lp-player .lp-track {
+  flex: 1;
+  font-size: 12px; color: #888880;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: Arial, sans-serif;
+}
+#lp-player .lp-track strong {
+  color: #F0EDE6; font-weight: 500; margin-right: 6px;
+}
+#lp-player .lp-controls {
+  display: flex; align-items: center; gap: 12px;
+}
+#lp-play-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #C9A84C; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s; flex-shrink: 0;
+}
+#lp-play-btn:hover { opacity: 0.8; }
+#lp-play-btn svg { width: 14px; height: 14px; fill: #0A0A0A; }
+#lp-vol-label {
+  font-size: 11px; color: #555; font-family: Arial, sans-serif;
+  white-space: nowrap;
+}
+#lp-volume {
+  width: 80px; accent-color: #C9A84C; cursor: pointer;
+}
+#lp-dismiss {
+  background: none; border: none; cursor: pointer;
+  color: #444; font-size: 18px; line-height: 1;
+  padding: 4px; transition: color 0.2s;
+}
+#lp-dismiss:hover { color: #C9A84C; }
+#lp-yt-frame {
+  position: absolute; width: 1px; height: 1px;
+  top: -9999px; left: -9999px; pointer-events: none;
+}
+</style>
+
+<div id="lp-player">
+  <iframe id="lp-yt-frame"
+    src="https://www.youtube.com/embed/4Gwt08kgUOM?enablejsapi=1&autoplay=0&loop=1&playlist=4Gwt08kgUOM&controls=0&modestbranding=1&rel=0"
+    allow="autoplay"
+    frameborder="0">
+  </iframe>
+
+  <div class="lp-logo paused" id="lp-logo">THE LEGACY BUILDER</div>
+
+  <div class="lp-track">
+    <strong>Now Playing:</strong> Smooth R&amp;B — 1 Hour Chill Mix
+  </div>
+
+  <div class="lp-controls">
+    <span id="lp-vol-label">VOL</span>
+    <input type="range" id="lp-volume" min="0" max="100" value="40"/>
+    <button id="lp-play-btn" aria-label="Play / Pause">
+      <svg id="lp-icon-play"  viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg id="lp-icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+    </button>
+    <button id="lp-dismiss" aria-label="Close player" title="Close player">✕</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var iframe    = document.getElementById('lp-yt-frame');
+  var playBtn   = document.getElementById('lp-play-btn');
+  var iconPlay  = document.getElementById('lp-icon-play');
+  var iconPause = document.getElementById('lp-icon-pause');
+  var volSlider = document.getElementById('lp-volume');
+  var logo      = document.getElementById('lp-logo');
+  var dismiss   = document.getElementById('lp-dismiss');
+  var bar       = document.getElementById('lp-player');
+  var isPlaying = false;
+  var ytReady   = false;
+  var pendingPlay = false;
+  var ytPlayer  = null;
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+
+  window.onYouTubeIframeAPIReady = function(){
+    ytPlayer = new YT.Player('lp-yt-frame', {
+      events: {
+        onReady: function(){
+          ytReady = true;
+          ytPlayer.setVolume(parseInt(volSlider.value));
+          if(pendingPlay){ ytPlayer.playVideo(); }
+        },
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.PLAYING){
+            isPlaying = true;
+            iconPlay.style.display  = 'none';
+            iconPause.style.display = 'block';
+            logo.classList.remove('paused');
+          } else {
+            isPlaying = false;
+            iconPlay.style.display  = 'block';
+            iconPause.style.display = 'none';
+            logo.classList.add('paused');
+          }
+        }
+      }
+    });
+  };
+
+  playBtn.addEventListener('click', function(){
+    if(!ytReady){ pendingPlay = true; return; }
+    if(isPlaying){ ytPlayer.pauseVideo(); }
+    else { ytPlayer.playVideo(); }
+  });
+
+  volSlider.addEventListener('input', function(){
+    if(ytReady) ytPlayer.setVolume(parseInt(this.value));
+  });
+
+  dismiss.addEventListener('click', function(){
+    if(ytReady && isPlaying) ytPlayer.stopVideo();
+    bar.style.display = 'none';
+  });
+})();
+</script>
+<!-- MUSIC PLAYER BAR: END -->
 </body>
 </html>
