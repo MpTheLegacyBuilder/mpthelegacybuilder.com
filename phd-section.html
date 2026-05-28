@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PhD Journey — Michael Parker | The Legacy Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #161616;
+    --bg4: #1C1C1C;
+    --gold: #C9A84C;
+    --gold-dim: #8A6E2F;
+    --white: #F0EDE6;
+    --gray: #888880;
+    --gray-dim: #555550;
+    --border: rgba(201,168,76,0.15);
+    --border-dim: rgba(255,255,255,0.06);
+    --blue: #378ADD;
+    --green: #1D9E75;
+    --purple: #7F77DD;
+    --amber: #EF9F27;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.96);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    backdrop-filter: blur(8px);
+  }
+  .nav-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 3px; color: var(--gold);
+    text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gray);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+  /* ── HERO ── */
+  .phd-hero {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px 60px;
+    position: relative; overflow: hidden;
+  }
+  .phd-hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 380px; height: 380px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+    pointer-events: none;
+  }
+  .phd-hero::after {
+    content: '';
+    position: absolute; top: 40px; right: 40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.06);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow span { display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero-eyebrow p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  }
+  .phd-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .phd-hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 15px; color: var(--gray);
+    max-width: 580px; margin-bottom: 36px; line-height: 1.8;
+  }
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 32px;
+    border-top: 1px solid var(--border-dim);
+    padding-top: 32px; margin-top: 8px;
+  }
+  .stat-item { }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; color: var(--gold);
+    display: block; line-height: 1.1;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-top: 4px; display: block;
+  }
+
+  /* ── LAYOUT ── */
+  .section { padding: 60px 40px; }
+  .section-alt { background: var(--bg2); }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* ── PROGRAM CARD ── */
+  .program-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--gold);
+    padding: 32px 36px;
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .prog-field { }
+  .prog-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 6px;
+  }
+  .prog-value {
+    font-size: 14px; color: var(--white); font-weight: 500;
+  }
+  .prog-note {
+    font-size: 12px; color: var(--gray); margin-top: 3px;
+  }
+  .status-pill {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 2px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+  }
+
+  /* ── RESEARCH FOCUS ── */
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .research-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-top: 2px solid var(--gold-dim);
+    padding: 24px;
+    border-radius: 2px;
+    transition: border-top-color 0.2s;
+  }
+  .research-card:hover { border-top-color: var(--gold); }
+  .research-icon {
+    font-size: 22px; margin-bottom: 12px; display: block;
+  }
+  .research-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .research-card p {
+    font-size: 13px; color: var(--gray); line-height: 1.7;
+  }
+
+  /* ── COURSEWORK ── */
+  .course-list { list-style: none; }
+  .course-item {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; flex-wrap: wrap; gap: 8px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .course-item:last-child { border-bottom: none; }
+  .course-left { }
+  .course-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .course-name {
+    font-size: 14px; font-weight: 500; color: var(--white);
+  }
+  .course-desc {
+    font-size: 12px; color: var(--gray); margin-top: 4px;
+  }
+  .course-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+    white-space: nowrap;
+  }
+  .badge-active {
+    background: rgba(29,158,117,0.1);
+    border: 1px solid rgba(29,158,117,0.3);
+    color: var(--green);
+  }
+  .badge-complete {
+    background: rgba(55,138,221,0.08);
+    border: 1px solid rgba(55,138,221,0.2);
+    color: var(--blue);
+  }
+
+  /* ── ACADEMIC WORK ── */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .work-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--gold-dim);
+    padding: 22px 24px;
+    border-radius: 2px;
+  }
+  .work-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 8px;
+  }
+  .work-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--white); margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .work-desc {
+    font-size: 12px; color: var(--gray);
+    line-height: 1.7; margin-bottom: 14px;
+  }
+  .work-request {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .work-request:hover { color: var(--white); }
+
+  /* ── DISSERTATION ── */
+  .diss-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--purple);
+    padding: 32px 36px;
+    border-radius: 2px;
+  }
+  .diss-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .diss-card p {
+    font-size: 14px; color: var(--gray);
+    line-height: 1.8; max-width: 680px;
+  }
+  .diss-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 20px;
+  }
+  .diss-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 2px;
+    background: rgba(127,119,221,0.08);
+    border: 1px solid rgba(127,119,221,0.25);
+    color: var(--purple);
+  }
+
+  /* ── TIMELINE ── */
+  .roadmap {
+    position: relative;
+    padding-left: 28px;
+  }
+  .roadmap::before {
+    content: ''; position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .roadmap-item {
+    position: relative; margin-bottom: 32px;
+  }
+  .roadmap-item::before {
+    content: ''; position: absolute;
+    left: -32px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .roadmap-item.done::before { background: var(--gold); }
+  .roadmap-item.active::before { background: var(--green); }
+  .roadmap-item.future::before { background: var(--gray-dim); }
+  .roadmap-year {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .roadmap-item.future .roadmap-year { color: var(--gray-dim); }
+  .roadmap-title {
+    font-size: 14px; font-weight: 500; color: var(--white);
+  }
+  .roadmap-item.future .roadmap-title { color: var(--gray); }
+  .roadmap-note {
+    font-size: 12px; color: var(--gray); margin-top: 3px;
+  }
+
+  /* ── CTA ── */
+  .cta-band {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .cta-band h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; color: var(--white); margin-bottom: 12px;
+  }
+  .cta-band p {
+    font-size: 14px; color: var(--gray); margin-bottom: 28px;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--bg); background: var(--gold);
+    padding: 14px 36px; text-decoration: none;
+    border-radius: 2px; transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border-dim);
+    padding: 24px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  footer .brand { color: var(--gold); }
+  footer .tagline { color: var(--gray-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .phd-hero, .section, .cta-band, footer { padding-left: 20px; padding-right: 20px; }
+    .program-card { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+  }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="https://www.mpthelegacybuilder.com">The Legacy Builder</a>
+  <ul class="nav-links">
+    <li><a href="https://www.mpthelegacybuilder.com">Home</a></li>
+    <li><a href="professional.html">Professional</a></li>
+    <li><a href="#" class="active">PhD Journey</a></li>
+    <li><a href="https://www.mpthelegacybuilder.com/#combo">Power Combo</a></li>
+    <li><a href="mailto:michael@mpthelegacybuilder.com">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="phd-hero fade-in">
+  <div class="hero-eyebrow">
+    <span></span>
+    <p>Academic Journey</p>
+  </div>
+  <h1>PhD in<br><em>Information Technology</em></h1>
+  <p class="hero-sub">
+    Pursuing doctoral-level mastery at the intersection of enterprise technology, cybersecurity, and AI-driven organizational resilience — building the academic foundation to lead at the highest levels.
+  </p>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-value">2026</span>
+      <span class="stat-label">Enrollment Year</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">Dec 2028</span>
+      <span class="stat-label">Target Completion</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">PhD-TIM</span>
+      <span class="stat-label">Program Track</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">25+ Yrs</span>
+      <span class="stat-label">Industry Experience Behind the Research</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="section fade-in">
+  <div class="section-label">Program Details</div>
+  <div class="program-card">
+    <div class="prog-field">
+      <div class="prog-label">Institution</div>
+      <div class="prog-value">National University</div>
+      <div class="prog-note">Accredited doctoral program</div>
+    </div>
+    <div class="prog-field">
+      <div class="prog-label">Degree</div>
+      <div class="prog-value">Doctor of Philosophy — Information Technology</div>
+      <div class="prog-note">Technology & Innovation Management (TIM) Track</div>
+    </div>
+    <div class="prog-field">
+      <div class="prog-label">Status</div>
+      <div class="prog-value"><span class="status-pill">In Progress</span></div>
+    </div>
+    <div class="prog-field">
+      <div class="prog-label">Expected Completion</div>
+      <div class="prog-value">December 2028</div>
+      <div class="prog-note">Dissertation in development</div>
+    </div>
+    <div class="prog-field">
+      <div class="prog-label">Dissertation Topic</div>
+      <div class="prog-value">In Development</div>
+      <div class="prog-note">Focus areas: AI integration, Zero Trust, enterprise/defense resilience</div>
+    </div>
+    <div class="prog-field">
+      <div class="prog-label">Academic Background</div>
+      <div class="prog-value">MBA · B.S. MIS · Cybersecurity Certificate</div>
+      <div class="prog-note">Texas Southern University · UT Dallas · UT Austin</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH FOCUS -->
+<section class="section section-alt fade-in">
+  <div class="section-label">Research Interests</div>
+  <div class="research-grid">
+    <div class="research-card">
+      <span class="research-icon">🤖</span>
+      <h3>AI Integration for Enterprise & Defense</h3>
+      <p>Exploring how artificial intelligence can be operationalized within enterprise and DoD environments to enhance decision-making, operational resilience, and infrastructure agility.</p>
+    </div>
+    <div class="research-card">
+      <span class="research-icon">🛡️</span>
+      <h3>Zero Trust Architecture</h3>
+      <p>Researching the implementation of Zero Trust frameworks across complex organizational environments, with emphasis on identity verification, micro-segmentation, and continuous validation.</p>
+    </div>
+    <div class="research-card">
+      <span class="research-icon">🔄</span>
+      <h3>Agile Modernization in IT</h3>
+      <p>Examining how Agile methodologies drive IT modernization initiatives — particularly within legacy-heavy enterprise and government environments transitioning to cloud-first infrastructure.</p>
+    </div>
+    <div class="research-card">
+      <span class="research-icon">📡</span>
+      <h3>NOC/SOC Integration</h3>
+      <p>Investigating the convergence of Network Operations Centers and Security Operations Centers as a unified model for real-time infrastructure visibility and cyber threat response.</p>
+    </div>
+    <div class="research-card">
+      <span class="research-icon">☁️</span>
+      <h3>Cloud Computing Strategy</h3>
+      <p>Analyzing cloud adoption frameworks, hybrid infrastructure models, and the governance structures required to manage enterprise-scale cloud transformation securely and efficiently.</p>
+    </div>
+    <div class="research-card">
+      <span class="research-icon">🏛️</span>
+      <h3>Digital Transformation</h3>
+      <p>Studying how organizations — particularly in defense and critical infrastructure sectors — manage large-scale digital transformation while maintaining operational continuity and compliance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COURSEWORK -->
+<section class="section fade-in">
+  <div class="section-label">Coursework</div>
+  <ul class="course-list">
+    <li class="course-item">
+      <div class="course-left">
+        <div class="course-code">MTIM 7011</div>
+        <div class="course-name">Technology & Innovation Management</div>
+        <div class="course-desc">Foundations of managing technology-driven organizations, innovation strategy, and IT leadership frameworks.</div>
+      </div>
+      <span class="course-badge badge-active">Active</span>
+    </li>
+    <li class="course-item">
+      <div class="course-left">
+        <div class="course-code">TIM-8410</div>
+        <div class="course-name">Cloud Computing</div>
+        <div class="course-desc">Enterprise cloud architecture, deployment models, governance, and security considerations at scale.</div>
+      </div>
+      <span class="course-badge badge-active">Active</span>
+    </li>
+    <li class="course-item">
+      <div class="course-left">
+        <div class="course-code">Doctoral Core</div>
+        <div class="course-name">Research Methods & Academic Writing</div>
+        <div class="course-desc">Doctoral-level research design, quantitative and qualitative methodologies, APA 7 scholarly writing standards.</div>
+      </div>
+      <span class="course-badge badge-complete">Completed</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ACADEMIC WORK -->
+<section class="section section-alt fade-in">
+  <div class="section-label">Academic Work</div>
+  <p style="font-size:13px; color:var(--gray); margin-bottom:28px; max-width:600px;">
+    Course papers and presentations are available for viewing upon request. The work below represents active research areas informing the dissertation and broader academic contributions.
+  </p>
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="work-type">Research Paper</div>
+      <div class="work-title">NOC/SOC Integration as a Unified Cyber-Infrastructure Model</div>
+      <div class="work-desc">Explores the convergence of network and security operations into a single, intelligence-driven command structure for enterprise environments.</div>
+      <a href="mailto:michael@mpthelegacybuilder.com?subject=Academic Work Request — NOC/SOC Paper" class="work-request">Request to View</a>
+    </div>
+    <div class="work-card">
+      <div class="work-type">Research Paper</div>
+      <div class="work-title">Zero Trust Architecture: Implementation Frameworks for Legacy IT Environments</div>
+      <div class="work-desc">Examines how organizations with legacy infrastructure can adopt Zero Trust principles without full infrastructure replacement.</div>
+      <a href="mailto:michael@mpthelegacybuilder.com?subject=Academic Work Request — Zero Trust Paper" class="work-request">Request to View</a>
+    </div>
+    <div class="work-card">
+      <div class="work-type">Research Paper</div>
+      <div class="work-title">Agile Modernization in Defense IT: Adapting Scrum for Mission-Critical Environments</div>
+      <div class="work-desc">Investigates the application of Agile Scrum methodologies within DoD and federal IT modernization programs.</div>
+      <a href="mailto:michael@mpthelegacybuilder.com?subject=Academic Work Request — Agile Modernization Paper" class="work-request">Request to View</a>
+    </div>
+    <div class="work-card">
+      <div class="work-type">Presentations</div>
+      <div class="work-title">Course Presentations — MTIM 7011 Series</div>
+      <div class="work-desc">Academic presentation series covering technology management, innovation strategy, and IT leadership at the doctoral level.</div>
+      <a href="mailto:michael@mpthelegacybuilder.com?subject=Academic Work Request — MTIM 7011 Presentations" class="work-request">Request to View</a>
+    </div>
+  </div>
+</section>
+
+<!-- DISSERTATION -->
+<section class="section fade-in">
+  <div class="section-label">Dissertation</div>
+  <div class="diss-card">
+    <h3>Topic: In Development</h3>
+    <p>
+      The dissertation is currently in the formative stage. Research is being positioned at the intersection of artificial intelligence, enterprise security architecture, and organizational resilience — with a focus on producing findings applicable to both private-sector enterprise and defense environments. A working title and formal proposal will be announced upon committee approval.
+    </p>
+    <div class="diss-tags">
+      <span class="diss-tag">AI Integration</span>
+      <span class="diss-tag">Zero Trust</span>
+      <span class="diss-tag">Enterprise Resilience</span>
+      <span class="diss-tag">Defense IT</span>
+      <span class="diss-tag">Digital Transformation</span>
+      <span class="diss-tag">Cybersecurity</span>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section section-alt fade-in">
+  <div class="section-label">PhD Roadmap</div>
+  <div class="roadmap">
+    <div class="roadmap-item done">
+      <div class="roadmap-year">2026 — Enrolled</div>
+      <div class="roadmap-title">Doctoral Program Begin</div>
+      <div class="roadmap-note">National University PhD-TIM program. Coursework underway.</div>
+    </div>
+    <div class="roadmap-item active">
+      <div class="roadmap-year">2026 — Current</div>
+      <div class="roadmap-title">Core Coursework & Research Development</div>
+      <div class="roadmap-note">MTIM 7011, TIM-8410, and foundational doctoral research tracks active.</div>
+    </div>
+    <div class="roadmap-item future">
+      <div class="roadmap-year">2027</div>
+      <div class="roadmap-title">Dissertation Proposal & Committee Formation</div>
+      <div class="roadmap-note">Working title finalized, committee assembled, formal proposal submitted.</div>
+    </div>
+    <div class="roadmap-item future">
+      <div class="roadmap-year">2027 – 2028</div>
+      <div class="roadmap-title">Dissertation Research & Writing</div>
+      <div class="roadmap-note">Primary data collection, analysis, and full dissertation manuscript development.</div>
+    </div>
+    <div class="roadmap-item future">
+      <div class="roadmap-year">Dec 2028</div>
+      <div class="roadmap-title">Defense & Conferral</div>
+      <div class="roadmap-note">Dissertation defense. PhD conferred. Legacy cemented.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band fade-in">
+  <h3>Interested in the research?</h3>
+  <p>Course papers and presentations are available upon request for academic peers, employers, and research collaborators.</p>
+  <a class="cta-btn" href="mailto:michael@mpthelegacybuilder.com?subject=PhD Research Inquiry">Request Academic Work</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="brand">The Legacy Builder</p>
+  <p class="tagline">Discipline &nbsp;·&nbsp; Faith &nbsp;·&nbsp; Ownership &nbsp;·&nbsp; Legacy</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
