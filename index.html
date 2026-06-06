@@ -1161,62 +1161,105 @@ builders do not take days off from purpose. They take days off from pressure. Bi
 </section>
 
 <!-- BLOG -->
+<!-- BLOG SECTION: START -->
 <section id="blog">
   <p class="section-eyebrow reveal">Thoughts &amp; Insights</p>
   <h2 class="section-title reveal">The <span>Blog</span></h2>
   <div class="section-rule reveal"></div>
 
-  <div class="blog-grid">
-    <a href="/blog/loyalty-not-lineage" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Legacy &amp; Leadership</p>
-        <h3>My Circle Is Built on Loyalty, Not Lineage</h3>
-        <p>Family isn't always blood. It's the people who show up, stay in your corner, and choose you every single day &mdash; without obligation.</p>
-        <p class="blog-date">May 2026</p>
-      </div>
-    </a>
-    <a href="/blog/zero-trust-architecture" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Tech &amp; Cybersecurity</p>
-        <h3>Zero Trust Architecture: Why the Old Perimeter Is Dead</h3>
-        <p>The castle-and-moat security model no longer holds. Here's why Zero Trust isn't just a buzzword &mdash; it's the future of defense-grade networking.</p>
-        <p class="blog-date">May 2026</p>
-      </div>
-    </a>
-    <a href="/blog/malachi-standards-accountability" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Faith &amp; Growth</p>
-        <h3>What Malachi Taught Me About Standards and Accountability</h3>
-        <p>The book of Malachi is a mirror. It reflects exactly where we cut corners, lower the bar, and offer God &mdash; and ourselves &mdash; our leftovers instead of our best.</p>
-        <p class="blog-date">April 2026</p>
-      </div>
-    </a>
-    <a href="/blog/phase-1-foundation-52-weeks" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Fitness</p>
-        <h3>Phase 1: The Foundation &mdash; 52 Weeks to a New Body</h3>
-        <p>At 6'3" and 350 lbs, I made a decision. Not a New Year's resolution. A covenant. Here's the plan, the why, and the weekly accountability that keeps me honest.</p>
-        <p class="blog-date">April 2026</p>
-      </div>
-    </a>
-    <a href="/blog/estate-plan-not-just-wealthy" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Business</p>
-        <h3>Why Every Family Needs an Estate Plan &mdash; Not Just the Wealthy</h3>
-        <p>LegacyPath was born from a simple truth: most families leave nothing behind because no one sat them down and explained the basics. That changes now.</p>
-        <p class="blog-date">March 2026</p>
-      </div>
-    </a>
-    <a href="/blog/agile-zero-trust-government-it" class="blog-card-link">
-      <div class="blog-card reveal">
-        <p class="blog-tag">Academic</p>
-        <h3>Agile, Zero Trust, and the Future of U.S. Government IT</h3>
-        <p>My doctoral research examines how Agile methodologies and Zero Trust Architecture are reshaping legacy IT modernization across U.S. federal agencies.</p>
-        <p class="blog-date">March 2026</p>
-      </div>
-    </a>
+  <div class="blog-grid" id="blog-grid">
+    <!-- Cards rendered by JS below -->
   </div>
 </section>
+<!-- BLOG SECTION: END -->
+
+<style>
+  .blog-card-inactive {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(30%);
+  }
+  .blog-card-active {
+    border: 1px solid rgba(201,168,76,0.6) !important;
+    box-shadow: 0 0 18px rgba(201,168,76,0.12);
+  }
+  .blog-day-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.18rem 0.6rem;
+    margin-bottom: 0.6rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-dim);
+  }
+  .blog-day-badge.today-badge {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .blog-card-inactive .blog-day-badge { border-color: rgba(255,255,255,0.1); color: #555; }
+</style>
+
+<script>
+(function(){
+  var DAYS = ['MON','TUE','WED','THU','FRI','SAT'];
+  // jsDay: 0=Sun,1=Mon,...,6=Sat. Map to our index 0=Mon..5=Sat
+  var jsDay = new Date().getDay();
+  // todayIdx: Mon=0 ... Sat=5; Sun=-1 (no active card on Sunday)
+  var todayIdx = (jsDay === 0) ? -1 : jsDay - 1;
+
+  var defaultCards = [
+    { tag:'Legacy &amp; Leadership', title:'My Circle Is Built on Loyalty, Not Lineage', excerpt:'Family isn\u2019t always blood. It\u2019s the people who show up, stay in your corner, and choose you every single day \u2014 without obligation.', date:'May 2026', href:'/blog/loyalty-not-lineage' },
+    { tag:'Tech &amp; Cybersecurity', title:'Zero Trust Architecture: Why the Old Perimeter Is Dead', excerpt:'The castle-and-moat security model no longer holds. Here\u2019s why Zero Trust isn\u2019t just a buzzword \u2014 it\u2019s the future of defense-grade networking.', date:'May 2026', href:'/blog/zero-trust-architecture' },
+    { tag:'Faith &amp; Growth', title:'What Malachi Taught Me About Standards and Accountability', excerpt:'The book of Malachi is a mirror. It reflects exactly where we cut corners, lower the bar, and offer God \u2014 and ourselves \u2014 our leftovers instead of our best.', date:'April 2026', href:'/blog/malachi-standards-accountability' },
+    { tag:'Fitness', title:'Phase 1: The Foundation \u2014 52 Weeks to a New Body', excerpt:'At 6\u20193\u201d and 350 lbs, I made a decision. Not a New Year\u2019s resolution. A covenant. Here\u2019s the plan, the why, and the weekly accountability that keeps me honest.', date:'April 2026', href:'/blog/phase-1-foundation-52-weeks' },
+    { tag:'Business', title:'Why Every Family Needs an Estate Plan \u2014 Not Just the Wealthy', excerpt:'LegacyPath was born from a simple truth: most families leave nothing behind because no one sat them down and explained the basics. That changes now.', date:'March 2026', href:'/blog/estate-plan-not-just-wealthy' },
+    { tag:'Academic', title:'Agile, Zero Trust, and the Future of U.S. Government IT', excerpt:'My doctoral research examines how Agile methodologies and Zero Trust Architecture are reshaping legacy IT modernization across U.S. federal agencies.', date:'March 2026', href:'/blog/agile-zero-trust-government-it' }
+  ];
+
+  // Try to load admin-published blog data from a known marker in the page
+  var blogData = [];
+  try {
+    var raw = document.getElementById('blog-data-json');
+    if(raw){ blogData = JSON.parse(raw.textContent); }
+  } catch(e){}
+  if(!blogData || blogData.length < 6){ blogData = defaultCards; }
+
+  var grid = document.getElementById('blog-grid');
+  var html = '';
+  for(var i=0;i<6;i++){
+    var card = blogData[i];
+    var isToday = (i === todayIdx);
+    var dayLabel = DAYS[i];
+    var activeClass = isToday ? 'blog-card-active' : 'blog-card-inactive';
+    var badgeClass = isToday ? 'today-badge' : '';
+    if(isToday){
+      html += '<a href="'+card.href+'" class="blog-card-link"><div class="blog-card reveal '+activeClass+'">';
+    } else {
+      html += '<div class="blog-card reveal '+activeClass+'">';
+    }
+    html += '<span class="blog-day-badge '+badgeClass+'">'+dayLabel+(isToday?' &mdash; TODAY':'')+'</span>';
+    html += '<p class="blog-tag">'+card.tag+'</p>';
+    html += '<h3>'+card.title+'</h3>';
+    html += '<p>'+card.excerpt+'</p>';
+    html += '<p class="blog-date">'+card.date+'</p>';
+    if(isToday){
+      html += '</div></a>';
+    } else {
+      html += '</div>';
+    }
+  }
+  grid.innerHTML = html;
+
+  // Re-trigger reveal observer on new cards
+  var reveals2 = grid.querySelectorAll('.reveal');
+  reveals2.forEach(function(el){ observer && observer.observe(el); });
+})();
+</script>
 
 <!-- FAITH -->
 <div id="faith" class="section-full">
@@ -1582,7 +1625,7 @@ builders do not take days off from purpose. They take days off from pressure. Bi
   <div class="lp-logo paused" id="lp-logo">THE LEGACY BUILDER</div>
 
   <div class="lp-track">
-    <strong>Now Playing:</strong> Smooth R&amp;B ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ 1 Hour Chill Mix
+    <strong>Now Playing:</strong> Smooth R&amp;B &mdash; 1 Hour Chill Mix
   </div>
 
   <div class="lp-controls">
@@ -1592,7 +1635,7 @@ builders do not take days off from purpose. They take days off from pressure. Bi
       <svg id="lp-icon-play"  viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
       <svg id="lp-icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
     </button>
-    <button id="lp-dismiss" aria-label="Close player" title="Close player">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</button>
+    <button id="lp-dismiss" aria-label="Close player" title="Close player">&times;</button>
   </div>
 </div>
 
