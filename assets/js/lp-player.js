@@ -5,7 +5,7 @@
  * If the MP3 is missing, the bar stays hidden so nothing looks broken. */
 (function () {
   var AUDIO_SRC   = '/assets/audio/legacy-jazz.mp3';
-  var TRACK_TITLE = 'Smooth Jazz Instrumental';
+  var TRACK_TITLE = 'Smooth Jazz Instrumental \u2014 Alex Morgan';
 
   var bar       = document.getElementById('lp-player');
   if (!bar) return;
