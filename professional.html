@@ -154,6 +154,59 @@
     font-size: 14px; color: var(--gray); line-height: 1.8;
   }
 
+  /* ── ENDORSEMENTS ── */
+  #endorsements[hidden] { display: none; }
+  .endorse-intro { font-size: 14px; color: var(--gray); margin-bottom: 36px; max-width: 620px; }
+  .endorse-group + .endorse-group { margin-top: 40px; }
+  .endorse-group-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 18px;
+  }
+  .endorse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .endorse-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-dim);
+    border-top: 2px solid var(--gold);
+    padding: 28px 28px 24px;
+    border-radius: 2px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .endorse-card::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 56px; line-height: 1;
+    color: var(--gold-dim);
+    position: absolute; top: 14px; left: 22px;
+  }
+  .endorse-card blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 16px; line-height: 1.7;
+    color: var(--white);
+    margin: 28px 0 22px;
+  }
+  .endorse-card figcaption {
+    border-top: 1px solid var(--border-dim);
+    padding-top: 14px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .endorse-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .endorse-meta { font-size: 12px; color: var(--gray); }
+  .endorse-note { margin-top: 32px; font-size: 12px; color: var(--gray-dim); letter-spacing: 0.5px; }
+  @media (max-width: 700px) {
+    .endorse-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── EXPERIENCE ── */
   .timeline { position: relative; }
   .timeline::before {
@@ -587,6 +640,73 @@
   </div>
 </section>
 
+<!-- ENDORSEMENTS
+     Stays hidden until at least one endorsement is added below.
+     To add one: copy a line in ENDORSEMENTS, paste the approved quote, save.
+     group "professional" = colleagues and shipmates (shown first)
+     group "character"    = friends, family and mentors -->
+<section class="section fade-in" id="endorsements" hidden>
+  <div class="section-label">Endorsements</div>
+  <h2>In Their Words</h2>
+  <p class="endorse-intro">What colleagues, shipmates, and mentors say about working alongside Michael.</p>
+
+  <div class="endorse-group" data-group="professional">
+    <h3 class="endorse-group-title">Colleagues &amp; Shipmates</h3>
+    <div class="endorse-grid"></div>
+  </div>
+
+  <div class="endorse-group" data-group="character">
+    <h3 class="endorse-group-title">Character &amp; Mentorship</h3>
+    <div class="endorse-grid"></div>
+  </div>
+
+  <p class="endorse-note">Full letters of recommendation available upon request.</p>
+</section>
+
+<script>
+  /* Add approved endorsements here. Only real, approved words, exactly as written. */
+  const ENDORSEMENTS = [
+    // { group: "professional", name: "Jennifer Robertson", title: "", relation: "Worked together at Anadarko Petroleum", quote: "" },
+    // { group: "professional", name: "JB",                 title: "", relation: "Worked together at SABIC",             quote: "" },
+    // { group: "professional", name: "Elvin Rayford",      title: "", relation: "Served together, U.S. Navy",           quote: "" },
+    // { group: "character",    name: "Jerome Powell",      title: "", relation: "Cousin and mentor",                     quote: "" },
+    // { group: "character",    name: "Perry Turner",       title: "", relation: "Longtime friend and mentor",            quote: "" },
+    // { group: "character",    name: "Edward Elliott",     title: "", relation: "Friend since childhood, 52+ years",     quote: "" },
+  ];
+
+  (function () {
+    const list = ENDORSEMENTS.filter(e => e.quote && e.quote.trim());
+    if (!list.length) return;
+    const section = document.getElementById('endorsements');
+    section.querySelectorAll('.endorse-group').forEach(group => {
+      const items = list.filter(e => e.group === group.dataset.group);
+      if (!items.length) { group.remove(); return; }
+      const grid = group.querySelector('.endorse-grid');
+      items.forEach(e => {
+        const card = document.createElement('figure');
+        card.className = 'endorse-card';
+        const q = document.createElement('blockquote');
+        q.textContent = e.quote.trim();
+        const cap = document.createElement('figcaption');
+        const nm = document.createElement('span');
+        nm.className = 'endorse-name';
+        nm.textContent = e.name;
+        cap.appendChild(nm);
+        const meta = [e.title, e.relation].filter(Boolean).join(' · ');
+        if (meta) {
+          const m = document.createElement('span');
+          m.className = 'endorse-meta';
+          m.textContent = meta;
+          cap.appendChild(m);
+        }
+        card.append(q, cap);
+        grid.appendChild(card);
+      });
+    });
+    section.hidden = false;
+  })();
+</script>
+
 <!-- CTA -->
 <div class="cta-band fade-in">
   <h3>Ready to connect?</h3>
@@ -608,105 +728,22 @@
 </script>
 
 <!-- MUSIC PLAYER BAR: START -->
-<style>
-#lp-player {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-  background: #0E0E0E;
-  border-top: 1px solid rgba(201,168,76,0.25);
-  height: 56px;
-  display: flex; align-items: center;
-  padding: 0 24px; gap: 16px;
-}
-#lp-player .lp-logo {
-  font-family: Arial, sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: #C9A84C; white-space: nowrap;
-  display: flex; align-items: center; gap: 8px;
-}
-#lp-player .lp-logo::before {
-  content: "";
-  display: inline-block;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #C9A84C;
-  animation: lp-pulse 2s infinite;
-}
-#lp-player .lp-logo.paused::before { animation: none; background: #555; }
-@keyframes lp-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
-}
-#lp-player .lp-track {
-  flex: 1; font-size: 12px; color: #888880;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-family: Arial, sans-serif;
-}
-#lp-player .lp-track strong { color: #F0EDE6; font-weight: 500; margin-right: 6px; }
-#lp-player .lp-controls { display: flex; align-items: center; gap: 12px; }
-#lp-play-btn {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: #C9A84C; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.2s; flex-shrink: 0;
-}
-#lp-play-btn:hover { opacity: 0.8; }
-#lp-play-btn svg { width: 14px; height: 14px; fill: #0A0A0A; }
-#lp-vol-label { font-size: 11px; color: #555; font-family: Arial, sans-serif; white-space: nowrap; }
-#lp-volume { width: 80px; accent-color: #C9A84C; cursor: pointer; }
-#lp-dismiss {
-  background: none; border: none; cursor: pointer;
-  color: #444; font-size: 18px; line-height: 1;
-  padding: 4px; transition: color 0.2s;
-}
-#lp-dismiss:hover { color: #C9A84C; }
-#lp-yt-frame {
-  position: absolute; width: 1px; height: 1px;
-  top: -9999px; left: -9999px; pointer-events: none;
-}
-</style>
-<div id="lp-player">
-  <iframe id="lp-yt-frame"
-    src="https://www.youtube.com/embed/4Gwt08kgUOM?enablejsapi=1&autoplay=0&loop=1&playlist=4Gwt08kgUOM&controls=0&modestbranding=1&rel=0"
-    allow="autoplay" frameborder="0"></iframe>
+<link rel="stylesheet" href="/assets/css/lp-player.css"/>
+<div id="lp-player" hidden>
   <div class="lp-logo paused" id="lp-logo">THE LEGACY BUILDER</div>
-  <div class="lp-track"><strong>Now Playing:</strong> Smooth R&amp;B &mdash; 1 Hour Chill Mix</div>
+  <div class="lp-track"><strong>Now Playing:</strong> <span id="lp-track-name">Smooth Jazz Instrumental</span></div>
   <div class="lp-controls">
     <span id="lp-vol-label">VOL</span>
-    <input type="range" id="lp-volume" min="0" max="100" value="40"/>
-    <button id="lp-play-btn" aria-label="Play / Pause">
-      <svg id="lp-icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-      <svg id="lp-icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+    <input type="range" id="lp-volume" min="0" max="100" value="35" aria-label="Music volume"/>
+    <button id="lp-play-btn" type="button" aria-label="Play music" aria-pressed="false">
+      <svg id="lp-icon-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg id="lp-icon-pause" viewBox="0 0 24 24" aria-hidden="true" style="display:none;"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+      <span id="lp-play-text">Play music</span>
     </button>
-    <button id="lp-dismiss" aria-label="Close player" title="Close player">&#x2715;</button>
+    <button id="lp-dismiss" type="button" aria-label="Close music player" title="Close player">&#x2715;</button>
   </div>
 </div>
-<script>
-(function(){
-  var playBtn=document.getElementById("lp-play-btn");
-  var iconPlay=document.getElementById("lp-icon-play");
-  var iconPause=document.getElementById("lp-icon-pause");
-  var volSlider=document.getElementById("lp-volume");
-  var logo=document.getElementById("lp-logo");
-  var dismiss=document.getElementById("lp-dismiss");
-  var bar=document.getElementById("lp-player");
-  var isPlaying=false,ytReady=false,pendingPlay=false,ytPlayer=null;
-  var tag=document.createElement("script");
-  tag.src="https://www.youtube.com/iframe_api";
-  document.head.appendChild(tag);
-  window.onYouTubeIframeAPIReady=function(){
-    ytPlayer=new YT.Player("lp-yt-frame",{events:{
-      onReady:function(){ytReady=true;ytPlayer.setVolume(parseInt(volSlider.value));if(pendingPlay){ytPlayer.playVideo();}},
-      onStateChange:function(e){
-        if(e.data===YT.PlayerState.PLAYING){isPlaying=true;iconPlay.style.display="none";iconPause.style.display="block";logo.classList.remove("paused");}
-        else{isPlaying=false;iconPlay.style.display="block";iconPause.style.display="none";logo.classList.add("paused");}
-      }
-    }});
-  };
-  playBtn.addEventListener("click",function(){if(!ytReady){pendingPlay=true;return;}if(isPlaying){ytPlayer.pauseVideo();}else{ytPlayer.playVideo();}});
-  volSlider.addEventListener("input",function(){if(ytReady)ytPlayer.setVolume(parseInt(this.value));});
-  dismiss.addEventListener("click",function(){if(ytReady&&isPlaying)ytPlayer.stopVideo();bar.style.display="none";});
-})();
-</script>
+<script src="/assets/js/lp-player.js" defer></script>
 <!-- MUSIC PLAYER BAR: END -->
 
 </body>
